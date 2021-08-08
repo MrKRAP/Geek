@@ -1,0 +1,112 @@
+DROP TABLE IF EXISTS catalogs;
+CREATE TABLE catalogs (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255)
+);
+
+INSERT INTO catalogs (name) VALUES
+  ('Процессоры'),
+  ( 'Материнские платы'),
+  ( 'Видеокарты'),
+  ( 'Жесткие диски'),
+  ( 'Оперативная память');
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) ,
+  birthday_at DATE,
+  created_at DATE DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATE DEFAULT CURRENT_TIMESTAMP
+) ;
+
+INSERT INTO users (name, birthday_at) VALUES
+  ('Геннадий', '1990-10-05'),
+  ('Наталья', '1984-11-12'),
+  ('Александр', '1985-05-20'),
+  ('Сергей', '1988-02-14'),
+  ('Иван', '1998-01-12'),
+  ('Мария', '1992-08-29');
+
+DROP TABLE IF EXISTS products;
+CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) ,
+  description TEXT ,
+  price DECIMAL (11,2) ,
+  catalog_id INT ,
+  created_at DATE DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATE DEFAULT CURRENT_TIMESTAMP
+) ;
+
+INSERT INTO products
+  (name, description, price, catalog_id)
+VALUES
+  ('Intel Core i3-8100', 'Процессор для настольных персональных компьютеров, основанных на платформе Intel.', 7890.00, 1),
+  ('Intel Core i5-7400', 'Процессор для настольных персональных компьютеров, основанных на платформе Intel.', 12700.00, 1),
+  ('AMD FX-8320E', 'Процессор для настольных персональных компьютеров, основанных на платформе AMD.', 4780.00, 1),
+  ('AMD FX-8320', 'Процессор для настольных персональных компьютеров, основанных на платформе AMD.', 7120.00, 1),
+  ('ASUS ROG MAXIMUS X HERO', 'Материнская плата ASUS ROG MAXIMUS X HERO, Z370, Socket 1151-V2, DDR4, ATX', 19310.00, 2),
+  ('Gigabyte H310M S2H', 'Материнская плата Gigabyte H310M S2H, H310, Socket 1151-V2, DDR4, mATX', 4790.00, 2),
+  ('MSI B250M GAMING PRO', 'Материнская плата MSI B250M GAMING PRO, B250, Socket 1151, DDR4, mATX', 5060.00, 2);
+
+DROP TABLE IF EXISTS orders;
+CREATE TABLE orders (
+  id SERIAL PRIMARY KEY,
+  user_id INT,
+  created_at DATE DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATE DEFAULT CURRENT_TIMESTAMP
+) ;
+
+DROP TABLE IF EXISTS orders_products;
+CREATE TABLE orders_products (
+  id SERIAL PRIMARY KEY,
+  order_id INT ,
+  product_id INT ,
+  total INT  DEFAULT 1 ,
+  created_at DATE DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATE DEFAULT CURRENT_TIMESTAMP
+)  ;
+
+DROP TABLE IF EXISTS discounts;
+CREATE TABLE discounts (
+  id SERIAL PRIMARY KEY,
+  user_id INT ,
+  product_id INT ,
+  discount FLOAT  ,
+  started_at DATE,
+  finished_at DATE,
+  created_at DATE DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATE DEFAULT CURRENT_TIMESTAMP
+) ;
+
+DROP TABLE IF EXISTS storehouses;
+CREATE TABLE storehouses (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) ,
+  created_at  DATE DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATE DEFAULT CURRENT_TIMESTAMP
+) ;
+
+DROP TABLE IF EXISTS storehouses_products;
+CREATE TABLE storehouses_products (
+  id SERIAL PRIMARY KEY,
+  storehouse_id INT ,
+  product_id INT ,
+  value INT  ,
+  created_at DATE DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATE DEFAULT CURRENT_TIMESTAMP
+) ;
+
+
+insert into storehouses_products (value)
+values (0),(2500),(0),(30),(500),(1)
+
+SELECT
+  name,
+  DATE_PART('year',current_timestamp)-date_part('year',birthday_at::date) AS age
+FROM
+  users;
+select count(value),sum(value) from storehouses_products
+
+
